@@ -1,0 +1,76 @@
+<header class="site-header color-scheme-1" data-header data-sticky>
+  <div class="page-width site-header__inner">
+    <button class="menu-toggle site-header__icon-btn" data-mobile-menu-toggle aria-expanded="false" aria-controls="MobileMenu" aria-label="Open menu">
+      {%- render 'icon-menu' -%}
+    </button>
+
+    <a href="{{ routes.root_url }}" class="site-header__logo">
+      {%- if settings.logo -%}
+        <img src="{{ settings.logo | image_url: width: 300 }}" alt="{{ shop.name }}" width="{{ settings.logo_width }}" style="width: {{ settings.logo_width }}px;">
+      {%- else -%}
+        {{ shop.name }}
+      {%- endif -%}
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      {%- for link in section.settings.main_menu.links -%}
+        <a href="{{ link.url }}" class="site-nav__link" {% if link.active %}aria-current="page"{% endif %}>{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+
+    <div class="site-header__icons">
+      <button class="site-header__icon-btn hide-mobile" data-search-toggle aria-expanded="false" aria-controls="HeaderSearch" aria-label="Search">
+        {%- render 'icon-search' -%}
+      </button>
+      <a href="{{ routes.account_url }}" class="site-header__icon-btn hide-mobile" aria-label="Account">
+        {%- render 'icon-account' -%}
+      </a>
+      <button class="site-header__icon-btn" data-cart-drawer-toggle aria-label="Open cart, {{ cart.item_count }} items">
+        {%- render 'icon-bag' -%}
+        <span class="cart-count {% if cart.item_count > 0 %}is-visible{% endif %}" data-cart-count>{{ cart.item_count }}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="page-width" id="HeaderSearch" data-search-panel hidden>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="field" style="max-width:480px;padding-bottom:var(--space-4);">
+      <label class="visually-hidden" for="HeaderSearchInput">Search</label>
+      <input id="HeaderSearchInput" type="search" name="q" placeholder="Search products" value="{{ search.terms | escape }}">
+      <input type="hidden" name="type" value="product">
+    </form>
+  </div>
+</header>
+
+<div class="mobile-menu" id="MobileMenu" data-mobile-menu>
+  <div class="mobile-menu__overlay" data-mobile-menu-close></div>
+  <div class="mobile-menu__panel">
+    <div class="flex-between">
+      <span class="site-header__logo">{{ shop.name }}</span>
+      <button class="site-header__icon-btn" data-mobile-menu-close aria-label="Close menu">{%- render 'icon-close' -%}</button>
+    </div>
+    <nav aria-label="Mobile" class="mt-8">
+      {%- for link in section.settings.main_menu.links -%}
+        <a href="{{ link.url }}" class="mobile-menu__link">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+    <div class="mt-8 stack" style="gap:var(--space-2);">
+      <a href="{{ routes.account_url }}" class="mobile-menu__link">Account</a>
+      <a href="{{ routes.search_url }}" class="mobile-menu__link">Search</a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "main_menu",
+      "label": "Menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,67 @@
+{%- comment -%}
+  snippets/cart-drawer.liquid — rendered once in layout/theme.liquid.
+  Markup is re-rendered by assets/theme.js after every cart mutation via
+  the Cart AJAX API (fetch('/cart.js') + fetch('/cart/change.js')) so the
+  drawer never needs a full page reload.
+{%- endcomment -%}
+<div class="cart-drawer" id="CartDrawer" data-cart-drawer aria-hidden="true">
+  <div class="cart-drawer__overlay" data-cart-drawer-close></div>
+  <div class="cart-drawer__panel" role="dialog" aria-modal="true" aria-label="Your bag">
+    <div class="cart-drawer__header">
+      <p class="h4">Your bag ({{ cart.item_count }})</p>
+      <button class="site-header__icon-btn" data-cart-drawer-close aria-label="Close bag">{%- render 'icon-close' -%}</button>
+    </div>
+
+    {%- if settings.cart_free_shipping_enable -%}
+      <div class="cart-drawer__shipping" data-cart-shipping-bar data-threshold="{{ settings.cart_free_shipping_threshold | times: 100 }}" data-achieved-text="{{ settings.cart_free_shipping_achieved_text | escape }}">
+        <p class="text-secondary" data-cart-shipping-message style="font-size: var(--font-sm);"></p>
+        <div class="shipping-progress"><div class="shipping-progress__fill" data-cart-shipping-fill style="width:0%"></div></div>
+      </div>
+    {%- endif -%}
+
+    <div class="cart-drawer__items" data-cart-items>
+      {%- if cart.item_count == 0 -%}
+        <div class="cart-drawer__empty">
+          <p class="h4">Your bag is empty</p>
+          <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary mt-6">Continue shopping</a>
+        </div>
+      {%- else -%}
+        {%- for item in cart.items -%}
+          <div class="cart-line" data-cart-line data-line="{{ forloop.index }}" data-key="{{ item.key }}">
+            <a href="{{ item.url }}" class="cart-line__img">
+              {%- if item.image -%}
+                <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.image.alt | escape }}" loading="lazy" width="84" height="100">
+              {%- endif -%}
+            </a>
+            <div class="cart-line__meta">
+              <a href="{{ item.url }}" class="cart-line__title">{{ item.product.title }}</a>
+              {%- if item.variant.title != 'Default Title' -%}
+                <p class="cart-line__variant">{{ item.variant.title }}</p>
+              {%- endif -%}
+              <div class="cart-line__controls">
+                <div class="qty-input" data-qty-input>
+                  <button type="button" data-qty-decrease aria-label="Decrease quantity">{%- render 'icon-minus' -%}</button>
+                  <input type="number" min="0" value="{{ item.quantity }}" aria-label="Quantity" data-qty-value>
+                  <button type="button" data-qty-increase aria-label="Increase quantity">{%- render 'icon-plus' -%}</button>
+                </div>
+                <span class="tabular-nums">{{ item.final_line_price | money }}</span>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- if cart.item_count > 0 -%}
+      <div class="cart-drawer__footer">
+        <div class="cart-drawer__subtotal">
+          <span>Subtotal</span>
+          <span class="tabular-nums" data-cart-subtotal>{{ cart.total_price | money }}</span>
+        </div>
+        <p class="field__hint mt-2" style="margin-bottom:var(--space-4);">Taxes and shipping calculated at checkout.</p>
+        <a href="{{ routes.cart_url }}" class="btn btn--accent btn--full">Checkout</a>
+        <p class="pdp-buy__reassurance mt-4" style="justify-content:center;">{%- render 'icon-return' -%} 30-day returns · Free exchanges</p>
+      </div>
+    {%- endif -%}
+  </div>
+</div>

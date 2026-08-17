@@ -1,0 +1,56 @@
+{%- comment -%}
+  snippets/product-card.liquid
+  Accepts: product (object)
+{%- endcomment -%}
+{%- assign featured_image = product.featured_media.preview_image | default: product.featured_image -%}
+{%- assign second_image = product.media[1].preview_image -%}
+<div class="product-card" data-animate>
+  <a href="{{ product.url }}" class="product-card__media {% if settings.card_image_ratio == 'square' %}is-square{% endif %}">
+    {%- if featured_image -%}
+      {{ featured_image | image_url: width: 800 | image_tag:
+          widths: '360, 540, 720, 900',
+          sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw',
+          loading: 'lazy',
+          alt: featured_image.alt | default: product.title }}
+    {%- endif -%}
+    {%- if settings.card_hover_image and second_image -%}
+      {{ second_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: '', class: 'product-card__img--back' }}
+    {%- endif -%}
+
+    <div class="product-card__badges">
+      {%- if product.compare_at_price > product.price -%}<span class="badge badge--sale">Sale</span>{%- endif -%}
+      {%- assign days_since_created = 'now' | date: '%s' | minus: product.created_at | date: '%s' | divided_by: 86400 -%}
+      {%- if days_since_created <= 30 -%}<span class="badge badge--new">New</span>{%- endif -%}
+    </div>
+
+    {%- if settings.card_quick_add and product.available -%}
+      <div class="product-card__quick-add">
+        <button type="button" class="btn btn--primary btn--full btn--sm" data-quick-add data-product-handle="{{ product.handle }}" data-product-id="{{ product.selected_or_first_available_variant.id }}">
+          Quick add
+        </button>
+      </div>
+    {%- endif -%}
+  </a>
+
+  {%- if settings.card_show_vendor and product.vendor != blank -%}
+    <span class="product-card__vendor">{{ product.vendor }}</span>
+  {%- endif -%}
+  <a href="{{ product.url }}">
+    <p class="product-card__title">{{ product.title }}</p>
+  </a>
+  <div class="product-card__price">
+    {%- render 'price', product: product -%}
+  </div>
+
+  {%- if product.options_with_values.size > 0 -%}
+    {%- for option in product.options_with_values -%}
+      {%- if option.name == 'Color' -%}
+        <div class="product-card__swatches">
+          {%- for value in option.values limit: 5 -%}
+            <span class="swatch" style="background: {{ value | handle }};" title="{{ value }}"></span>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+</div>

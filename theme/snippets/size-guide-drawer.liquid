@@ -1,0 +1,26 @@
+<div class="filter-drawer" data-size-guide-drawer aria-hidden="true">
+  <div class="filter-drawer__panel" role="dialog" aria-modal="true" aria-label="Size guide">
+    <div class="flex-between">
+      <p class="h4">Size guide</p>
+      <button class="site-header__icon-btn" data-size-guide-close aria-label="Close size guide">{%- render 'icon-close' -%}</button>
+    </div>
+    <div class="rte mt-6">
+      {%- if product.metafields.custom.size_guide != blank -%}
+        {{ product.metafields.custom.size_guide.value }}
+      {%- else -%}
+        <table style="width:100%;border-collapse:collapse;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--scheme-1-border);"><th style="text-align:left;padding:var(--space-2) 0;">Size</th><th>Chest (in)</th><th>Waist (in)</th><th>Sleeve (in)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:var(--space-2) 0;">38</td><td>38–39</td><td>32–33</td><td>25</td></tr>
+            <tr><td style="padding:var(--space-2) 0;">40</td><td>40–41</td><td>34–35</td><td>25.5</td></tr>
+            <tr><td style="padding:var(--space-2) 0;">42</td><td>42–43</td><td>36–37</td><td>26</td></tr>
+            <tr><td style="padding:var(--space-2) 0;">44</td><td>44–45</td><td>38–39</td><td>26.5</td></tr>
+          </tbody>
+        </table>
+        <p class="field__hint mt-4">Between sizes? Our tailoring runs true to size — size up for a relaxed fit.</p>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

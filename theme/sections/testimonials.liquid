@@ -1,0 +1,55 @@
+<section class="section-padding color-scheme-1" style="padding-top:{{ section.settings.padding_top }}px; padding-bottom:{{ section.settings.padding_bottom }}px;">
+  <div class="page-width">
+    <div class="text-center" style="margin-bottom: var(--space-8);">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="h2 mt-2">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="grid grid--3">
+      {%- for block in section.blocks -%}
+        <div class="testimonial-card" {{ block.shopify_attributes }} data-animate>
+          <div class="stars" aria-hidden="true">
+            {%- for i in (1..5) -%}{%- if i <= block.settings.rating -%}★{%- else -%}☆{%- endif -%}{%- endfor -%}
+          </div>
+          <p class="testimonial-card__quote mt-4">&ldquo;{{ block.settings.quote }}&rdquo;</p>
+          <p class="testimonial-card__author">{{ block.settings.author }}{% if block.settings.detail != blank %} — {{ block.settings.detail }}{% endif %}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Reviews" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What our customers say" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 128, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 128, "step": 4, "unit": "px", "default": 96 }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "range", "id": "rating", "label": "Rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "Fits true to size — I'm 6'1\" and took a size 40 jacket. The wool is noticeably heavier than anything else I own at this price." },
+        { "type": "text", "id": "author", "label": "Author", "default": "James R." },
+        { "type": "text", "id": "detail", "label": "Detail", "default": "Verified buyer, Chicago" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "testimonial", "settings": { "quote": "Three years in and the elbows still look new. Worth every dollar of the upgrade from fast fashion.", "author": "Marcus D.", "detail": "Verified buyer, Austin" } },
+        { "type": "testimonial", "settings": { "quote": "Customer service actually answered when I asked about alterations. That alone is rare these days.", "author": "Priya K.", "detail": "Verified buyer, Toronto" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

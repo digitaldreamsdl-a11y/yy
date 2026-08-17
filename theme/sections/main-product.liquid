@@ -1,0 +1,190 @@
+{%- comment -%} sections/main-product.liquid — the money page. See product-page-playbook.md for the reasoning behind this order. {%- endcomment -%}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<script type="application/json" data-product-variants>
+  {{ product.variants | json }}
+</script>
+
+<section class="page-width section-padding" data-product-section data-product-handle="{{ product.handle }}">
+  <div class="pdp">
+    {%- comment -%} ---------- Gallery ---------- {%- endcomment -%}
+    <div class="pdp-gallery" data-gallery>
+      <div class="pdp-gallery__main" data-gallery-main data-zoom>
+        {%- for media in product.media limit: 1 -%}
+          {{ media.preview_image | image_url: width: 1400 | image_tag:
+              widths: '600, 900, 1200, 1400',
+              sizes: '(min-width: 990px) 50vw, 100vw',
+              loading: 'eager', fetchpriority: 'high',
+              alt: media.alt | default: product.title,
+              class: 'pdp-gallery__image is-active',
+              data-media-id: media.id }}
+        {%- endfor -%}
+        {%- for media in product.media offset: 1 -%}
+          {{ media.preview_image | image_url: width: 1400 | image_tag:
+              widths: '600, 900, 1200, 1400', sizes: '(min-width: 990px) 50vw, 100vw',
+              loading: 'lazy', alt: media.alt | default: product.title,
+              class: 'pdp-gallery__image', style: 'display:none;',
+              data-media-id: media.id }}
+        {%- endfor -%}
+      </div>
+      {%- if product.media.size > 1 -%}
+        <div class="pdp-gallery__thumbs" data-gallery-thumbs>
+          {%- for media in product.media -%}
+            <button type="button" class="pdp-gallery__thumb {% if forloop.first %}is-active{% endif %}" data-gallery-thumb data-media-id="{{ media.id }}" aria-label="Show image {{ forloop.index }}">
+              {{ media.preview_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} ---------- Buy box ---------- {%- endcomment -%}
+    <div class="pdp-buy">
+      {%- if product.vendor != blank -%}<p class="pdp-buy__vendor">{{ product.vendor }}</p>{%- endif -%}
+      <h1 class="pdp-buy__title">{{ product.title }}</h1>
+
+      {%- if section.settings.show_reviews and product.metafields.reviews.rating.value -%}
+        <a href="#Reviews" class="pdp-buy__reviews">
+          <span class="stars" aria-hidden="true">
+            {%- assign rating = product.metafields.reviews.rating.value.rating | default: 0 -%}
+            {%- for i in (1..5) -%}{%- if i <= rating -%}★{%- else -%}☆{%- endif -%}{%- endfor -%}
+          </span>
+          <span>{{ product.metafields.reviews.rating_count.value | default: 0 }} reviews</span>
+        </a>
+      {%- endif -%}
+
+      <div class="pdp-buy__price" data-product-price>
+        {%- render 'price', variant: current_variant -%}
+      </div>
+
+      {%- form 'product', product, id: 'ProductForm', class: 'product-form', data-product-form: '' -%}
+        <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+
+        {%- for option in product.options_with_values -%}
+          <div class="option-group" data-option-position="{{ forloop.index }}">
+            <div class="option-group__label">
+              <span>{{ option.name }}: <strong data-option-selected>{{ option.selected_value }}</strong></span>
+              {%- if option.name == 'Size' -%}
+                <button type="button" class="size-guide-link" data-size-guide-open>Size guide</button>
+              {%- endif -%}
+            </div>
+
+            {%- if option.name == 'Color' -%}
+              <div class="swatch-list">
+                {%- for value in option.values -%}
+                  <input class="swatch-input" type="radio" id="Color-{{ forloop.index }}" name="option-{{ forloop.parentloop.index }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} data-option-input>
+                  <label for="Color-{{ forloop.index }}" style="background:{{ value | handle }};" title="{{ value }}"></label>
+                {%- endfor -%}
+              </div>
+            {%- else -%}
+              <div class="size-list">
+                {%- for value in option.values -%}
+                  {%- assign available = false -%}
+                  {%- for v in product.variants -%}
+                    {%- if v.options contains value and v.available -%}{%- assign available = true -%}{%- endif -%}
+                  {%- endfor -%}
+                  <input class="size-input" type="radio" id="{{ option.name }}-{{ forloop.index }}" name="option-{{ forloop.parentloop.index }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} {% unless available %}disabled{% endunless %} data-option-input>
+                  <label for="{{ option.name }}-{{ forloop.index }}">{{ value }}</label>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+
+        <div class="pdp-buy__atc-row">
+          <div class="qty-input" data-qty-input>
+            <button type="button" data-qty-decrease aria-label="Decrease quantity">{%- render 'icon-minus' -%}</button>
+            <input type="number" name="quantity" min="1" value="1" aria-label="Quantity" data-qty-value>
+            <button type="button" data-qty-increase aria-label="Increase quantity">{%- render 'icon-plus' -%}</button>
+          </div>
+          <button type="submit" class="btn btn--accent btn--full" data-atc-button {% unless current_variant.available %}disabled{% endunless %}>
+            <span data-atc-label>{% if current_variant.available %}Add to bag — <span data-atc-price>{{ current_variant.price | money }}</span>{% else %}Sold out{% endif %}</span>
+          </button>
+        </div>
+      {%- endform -%}
+
+      <p class="pdp-buy__reassurance">{%- render 'icon-truck' -%} {{ section.settings.reassurance_text }}</p>
+      <p class="pdp-buy__delivery">{%- render 'icon-return' -%} {{ section.settings.returns_text }}</p>
+
+      {%- comment -%} ---------- Accordions ---------- {%- endcomment -%}
+      <div class="accordion mt-8">
+        <details class="accordion__item" open>
+          <summary>Description {%- render 'icon-chevron' -%}</summary>
+          <div class="accordion__content rte">{{ product.description }}</div>
+        </details>
+        {%- if product.metafields.custom.materials != blank -%}
+          <details class="accordion__item">
+            <summary>Materials & care {%- render 'icon-chevron' -%}</summary>
+            <div class="accordion__content rte">{{ product.metafields.custom.materials.value }}</div>
+          </details>
+        {%- endif -%}
+        <details class="accordion__item">
+          <summary>Shipping & returns {%- render 'icon-chevron' -%}</summary>
+          <div class="accordion__content rte">
+            <p>{{ section.settings.reassurance_text }}</p>
+            <p class="mt-2">{{ section.settings.returns_text }}</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ---------- Cross-sell ---------- {%- endcomment -%}
+  {%- if section.settings.cross_sell_collection != blank -%}
+    <div class="mt-8" style="margin-top:var(--section-gap-mobile);">
+      <h2 class="h3" style="margin-bottom:var(--space-6);">Complete the look</h2>
+      <div class="grid grid--4">
+        {%- for p in section.settings.cross_sell_collection.products limit: 4 -%}
+          {%- unless p.handle == product.handle -%}{%- render 'product-card', product: p -%}{%- endunless -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{%- render 'size-guide-drawer', product: product -%}
+
+{%- comment -%} ---------- Sticky mobile ATC ---------- {%- endcomment -%}
+<div class="sticky-atc" data-sticky-atc>
+  <div class="pdp-gallery__thumb" style="flex:0 0 44px;width:44px;height:52px;">
+    {%- if product.featured_image -%}<img src="{{ product.featured_image | image_url: width: 100 }}" alt="" width="44" height="52">{%- endif -%}
+  </div>
+  <div style="flex:1;">
+    <p style="font-size:var(--font-sm);font-weight:600;">{{ product.title }}</p>
+    <p class="tabular-nums" data-sticky-price>{{ current_variant.price | money }}</p>
+  </div>
+  <button type="button" class="btn btn--accent" data-sticky-atc-button {% unless current_variant.available %}disabled{% endunless %}>Add to bag</button>
+</div>
+
+{%- comment -%} ---------- Structured data ---------- {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "image": [{{ product.featured_image | image_url: width: 1200 | json }}],
+  "description": {{ product.description | strip_html | json }},
+  "sku": {{ current_variant.sku | json }},
+  "brand": { "@type": "Brand", "name": {{ product.vendor | json }} },
+  "offers": {
+    "@type": "Offer",
+    "url": {{ request.origin | append: product.url | json }},
+    "priceCurrency": {{ cart.currency.iso_code | json }},
+    "price": {{ current_variant.price | divided_by: 100.0 | json }},
+    "availability": "https://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}"
+  }
+}
+</script>
+
+{% schema %}
+{
+  "name": "Product page",
+  "tag": "section",
+  "settings": [
+    { "type": "checkbox", "id": "show_reviews", "label": "Show review stars", "default": true },
+    { "type": "text", "id": "reassurance_text", "label": "Shipping reassurance line", "default": "Free shipping over $250 · Ships in 24h" },
+    { "type": "text", "id": "returns_text", "label": "Returns reassurance line", "default": "30-day returns · Free exchanges" },
+    { "type": "collection", "id": "cross_sell_collection", "label": "\"Complete the look\" collection" }
+  ]
+}
+{% endschema %}

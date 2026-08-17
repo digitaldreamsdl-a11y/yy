@@ -1,0 +1,67 @@
+<footer class="site-footer color-scheme-2" style="background: var(--scheme-2-bg); color: var(--scheme-2-text);">
+  <div class="page-width">
+    <div class="footer-grid">
+      <div>
+        <div class="site-header__logo" style="margin-bottom: var(--space-4);">
+          {%- if settings.logo -%}
+            <img src="{{ settings.logo | image_url: width: 260 }}" alt="{{ shop.name }}" width="140" style="width:140px;filter:invert(1) brightness(2);">
+          {%- else -%}
+            {{ shop.name }}
+          {%- endif -%}
+        </div>
+        <p class="rte text-secondary" style="color: var(--scheme-2-text-secondary); max-width:32ch;">{{ section.settings.description }}</p>
+        <div class="footer-social">
+          {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" aria-label="Instagram" class="footer-col__link">Instagram</a>{%- endif -%}
+          {%- if settings.social_pinterest != blank -%}<a href="{{ settings.social_pinterest }}" aria-label="Pinterest" class="footer-col__link">Pinterest</a>{%- endif -%}
+          {%- if settings.social_facebook != blank -%}<a href="{{ settings.social_facebook }}" aria-label="Facebook" class="footer-col__link">Facebook</a>{%- endif -%}
+          {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" aria-label="TikTok" class="footer-col__link">TikTok</a>{%- endif -%}
+        </div>
+      </div>
+
+      {%- for block in section.blocks -%}
+        <div {{ block.shopify_attributes }}>
+          <p class="footer-col__title">{{ block.settings.title }}</p>
+          {%- if block.settings.menu != blank -%}
+            {%- for link in block.settings.menu.links -%}
+              <a href="{{ link.url }}" class="footer-col__link">{{ link.title }}</a>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</span>
+      <div class="payment-icons">
+        {%- for type in shop.enabled_payment_types -%}
+          {{ type | payment_type_svg_tag: class: 'payment-icon' }}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Brand description",
+      "default": "<p>Considered tailoring and everyday essentials, made to be kept.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_column",
+      "name": "Link column",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Heading", "default": "Shop" },
+        { "type": "link_list", "id": "menu", "label": "Menu" }
+      ]
+    }
+  ],
+  "max_blocks": 3
+}
+{% endschema %}

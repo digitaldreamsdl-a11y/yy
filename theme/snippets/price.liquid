@@ -1,0 +1,10 @@
+{%- comment -%} snippets/price.liquid — accepts: product OR variant {%- endcomment -%}
+{%- assign target = variant | default: product -%}
+<span class="tabular-nums">
+  {%- if target.compare_at_price > target.price -%}
+    <span class="price__compare">{{ target.compare_at_price | money }}</span>
+    <span class="price__sale">{{ target.price | money }}</span>
+  {%- else -%}
+    <span>{{ target.price | money }}</span>
+  {%- endif -%}
+</span>

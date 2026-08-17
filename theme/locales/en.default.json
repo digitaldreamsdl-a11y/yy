@@ -1,0 +1,40 @@
+{
+  "general": {
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "404": {
+      "title": "Page not found",
+      "subtext": "The page you requested does not exist."
+    },
+    "search": {
+      "placeholder": "Search products"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to bag",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "quantity": "Quantity",
+      "size_guide": "Size guide"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your bag",
+      "empty": "Your bag is empty",
+      "continue_shopping": "Continue shopping",
+      "subtotal": "Subtotal",
+      "checkout": "Checkout"
+    }
+  },
+  "newsletter": {
+    "form": {
+      "email_placeholder": "Your email address",
+      "submit": "Subscribe",
+      "confirmed": "Thanks — check your inbox to confirm."
+    }
+  }
+}

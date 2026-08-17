@@ -1,0 +1,84 @@
+<section class="page-width section-padding">
+  <div class="text-center" style="margin-bottom:var(--space-8);">
+    <h1 class="h1">{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <div class="rte mt-4" style="margin-inline:auto;">{{ collection.description }}</div>
+    {%- endif -%}
+  </div>
+
+  <div class="collection-toolbar">
+    <button type="button" class="btn btn--ghost btn--sm" data-filter-drawer-toggle>
+      Filter{% if collection.filters %} & Sort{% endif %}
+    </button>
+    <span class="text-secondary" style="font-size:var(--font-sm);">{{ collection.products_count }} products</span>
+  </div>
+
+  {%- comment -%} Native Shopify filtering + sort — works without JS, enhanced by theme.js for the drawer. {%- endcomment -%}
+  {%- paginate collection.products by section.settings.products_per_page -%}
+  <form id="CollectionFilterForm" data-collection-filter-form>
+    <div class="filter-drawer" data-filter-drawer aria-hidden="true">
+      <div class="filter-drawer__panel" role="dialog" aria-modal="true" aria-label="Filter and sort">
+        <div class="flex-between">
+          <p class="h4">Filter & Sort</p>
+          <button type="button" class="site-header__icon-btn" data-filter-drawer-close aria-label="Close filters">{%- render 'icon-close' -%}</button>
+        </div>
+
+        <div class="filter-group">
+          <label for="SortBy" style="font-weight:600;display:block;margin-bottom:var(--space-2);">Sort by</label>
+          <select id="SortBy" name="sort_by" class="field" style="min-height:44px;border:1px solid var(--scheme-1-border);border-radius:var(--radius-base);width:100%;">
+            {%- for option in collection.sort_options -%}
+              <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>
+            {%- endfor -%}
+          </select>
+        </div>
+
+        {%- for filter in collection.filters -%}
+          <details class="filter-group" open>
+            <summary>{{ filter.label }} {%- render 'icon-chevron' -%}</summary>
+            <div class="mt-2">
+              {%- for value in filter.values -%}
+                <label class="filter-option">
+                  <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                  {{ value.label }} ({{ value.count }})
+                </label>
+              {%- endfor -%}
+            </div>
+          </details>
+        {%- endfor -%}
+
+        <div class="mt-6" style="display:flex;gap:var(--space-3);">
+          <button type="submit" class="btn btn--primary btn--full">Apply</button>
+          {%- if collection.filters != empty -%}
+            <a href="{{ collection.url }}" class="btn btn--ghost btn--full">Clear</a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid--4 mt-8">
+      {%- for product in collection.products -%}
+        {%- render 'product-card', product: product -%}
+      {%- else -%}
+        <p class="text-secondary">No products found. Try clearing a filter.</p>
+      {%- endfor -%}
+    </div>
+  </form>
+
+  {%- if paginate.pages > 1 -%}
+    <nav class="flex-center mt-8" style="gap:var(--space-3);" aria-label="Pagination">
+      {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" class="btn btn--ghost btn--sm">Previous</a>{%- endif -%}
+      <span class="text-secondary" style="font-size:var(--font-sm);">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+      {%- if paginate.next -%}<a href="{{ paginate.next.url }}" class="btn btn--ghost btn--sm">Next</a>{%- endif -%}
+    </nav>
+  {%- endif -%}
+  {%- endpaginate -%}
+</section>
+
+{% schema %}
+{
+  "name": "Collection page",
+  "settings": [
+    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 }
+  ]
+}
+{% endschema %}

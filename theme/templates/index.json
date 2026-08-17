@@ -1,0 +1,66 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "eyebrow": { "type": "eyebrow", "settings": { "text": "Autumn / Winter Collection" } },
+        "heading": { "type": "heading", "settings": { "text": "Tailoring for the way you actually live" } },
+        "text": { "type": "text", "settings": { "text": "Cut in small batches from mill-woven cloth. Built to hold a decade of wear, not a season." } },
+        "buttons": { "type": "buttons", "settings": { "primary_label": "Shop the collection", "primary_link": "", "secondary_label": "Our story", "secondary_link": "" } }
+      },
+      "block_order": ["eyebrow", "heading", "text", "buttons"],
+      "settings": { "height": "full", "alignment": "left", "text_color": "light", "show_scrim": true }
+    },
+    "categories": {
+      "type": "collection-list",
+      "blocks": {
+        "cat-1": { "type": "category", "settings": { "subtitle": "Tailoring", "title": "Suits & Blazers" } },
+        "cat-2": { "type": "category", "settings": { "subtitle": "Everyday", "title": "Shirting" } },
+        "cat-3": { "type": "category", "settings": { "subtitle": "Finishing", "title": "Outerwear" } }
+      },
+      "block_order": ["cat-1", "cat-2", "cat-3"],
+      "settings": { "heading": "Shop by category", "padding_top": 96, "padding_bottom": 40 }
+    },
+    "new-arrivals": {
+      "type": "featured-collection",
+      "settings": { "eyebrow": "Just in", "heading": "New arrivals", "products_to_show": 8, "show_view_all": true, "padding_top": 40, "padding_bottom": 96 }
+    },
+    "brand-story": {
+      "type": "editorial-image-text",
+      "blocks": {
+        "eyebrow": { "type": "eyebrow", "settings": { "text": "Our craft" } },
+        "heading": { "type": "heading", "settings": { "text": "Made to be kept, not replaced" } },
+        "text": { "type": "text", "settings": { "text": "<p>Every piece is cut from mill-woven cloth in small batches and finished by hand. We measure success in how a jacket looks after ten years, not ten washes.</p>" } },
+        "button": { "type": "button", "settings": { "label": "Our story", "link": "", "style": "ghost" } }
+      },
+      "block_order": ["eyebrow", "heading", "text", "button"],
+      "settings": { "layout": "image_left", "asymmetric": true, "color_scheme": "1", "padding_top": 96, "padding_bottom": 96 }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "t1": { "type": "testimonial", "settings": { "rating": 5, "quote": "Fits true to size — I'm 6'1\" and took a size 40 jacket. The wool is noticeably heavier than anything else I own at this price.", "author": "James R.", "detail": "Verified buyer, Chicago" } },
+        "t2": { "type": "testimonial", "settings": { "rating": 5, "quote": "Three years in and the elbows still look new. Worth every dollar of the upgrade from fast fashion.", "author": "Marcus D.", "detail": "Verified buyer, Austin" } },
+        "t3": { "type": "testimonial", "settings": { "rating": 4, "quote": "Customer service actually answered when I asked about alterations. That alone is rare these days.", "author": "Priya K.", "detail": "Verified buyer, Toronto" } }
+      },
+      "block_order": ["t1", "t2", "t3"],
+      "settings": { "eyebrow": "Reviews", "heading": "What our customers say", "padding_top": 96, "padding_bottom": 96 }
+    },
+    "ugc": {
+      "type": "ugc-gallery",
+      "blocks": {
+        "p1": { "type": "photo", "settings": {} },
+        "p2": { "type": "photo", "settings": {} },
+        "p3": { "type": "photo", "settings": {} },
+        "p4": { "type": "photo", "settings": {} }
+      },
+      "block_order": ["p1", "p2", "p3", "p4"],
+      "settings": { "eyebrow": "Community", "heading": "Worn by our customers", "padding_top": 96, "padding_bottom": 96 }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": { "eyebrow": "Stay in the loop", "heading": "First access to new drops", "text": "Join the list for early access to limited runs and private sample sales.", "color_scheme": "3", "padding_top": 96, "padding_bottom": 96 }
+    }
+  },
+  "order": ["hero", "categories", "new-arrivals", "brand-story", "reviews", "ugc", "newsletter"]
+}

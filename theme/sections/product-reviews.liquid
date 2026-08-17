@@ -1,0 +1,73 @@
+<section class="page-width section-padding" id="Reviews">
+  <div class="flex-between" style="align-items:flex-start;flex-wrap:wrap;gap:var(--space-6);margin-bottom:var(--space-8);">
+    <div>
+      <h2 class="h3">Reviews</h2>
+      <div class="review-summary mt-4">
+        <span class="stars" style="font-size:var(--font-h3);" aria-hidden="true">★★★★★</span>
+        <div>
+          {%- for i in (1..5) -%}
+            {%- assign pct = 90 | minus: forloop.index0 | times: 20 -%}
+            <div class="rating-bar">
+              <span>{{ 6 | minus: forloop.index }}★</span>
+              <div class="rating-bar__track"><div class="rating-bar__fill" style="width:{{ pct }}%;"></div></div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+    <a href="#WriteReview" class="btn btn--ghost">Write a review</a>
+  </div>
+
+  <div>
+    {%- for block in section.blocks -%}
+      <div class="review" {{ block.shopify_attributes }}>
+        <div class="flex-between">
+          <div>
+            <span class="stars" aria-hidden="true">
+              {%- for i in (1..5) -%}{%- if i <= block.settings.rating -%}★{%- else -%}☆{%- endif -%}{%- endfor -%}
+            </span>
+            <p style="font-weight:600;margin-top:var(--space-2);">{{ block.settings.title }}</p>
+          </div>
+          <span class="text-secondary" style="font-size:var(--font-sm);">{{ block.settings.date }}</span>
+        </div>
+        <p class="rte mt-2">{{ block.settings.body }}</p>
+        <p class="text-secondary mt-2" style="font-size:var(--font-sm);">{{ block.settings.author }}{% if block.settings.verified %} · Verified buyer{% endif %}</p>
+        {%- if block.settings.reply != blank -%}
+          <div class="review__reply">
+            <strong>Reply from {{ shop.name }}</strong>
+            <p class="mt-2">{{ block.settings.reply }}</p>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product reviews",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "range", "id": "rating", "label": "Rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "title", "label": "Review title", "default": "Exactly as described" },
+        { "type": "textarea", "id": "body", "label": "Review body", "default": "Fits true to size — I'm 5'11\" and took a size 40. The wool has real weight to it." },
+        { "type": "text", "id": "author", "label": "Author", "default": "T. Bennett" },
+        { "type": "text", "id": "date", "label": "Date", "default": "August 2026" },
+        { "type": "checkbox", "id": "verified", "label": "Verified buyer", "default": true },
+        { "type": "textarea", "id": "reply", "label": "Merchant reply (optional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product reviews",
+      "blocks": [ { "type": "review" }, { "type": "review", "settings": { "rating": 4, "title": "Great jacket, sleeves ran long", "body": "Had to get the sleeves taken in about an inch, but the tailor said the cloth was excellent to work with.", "author": "D. Osei", "reply": "Thanks for the note — we're updating our sleeve-length guidance for tall sizes based on feedback like this." } } ]
+    }
+  ]
+}
+{% endschema %}

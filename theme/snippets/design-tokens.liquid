@@ -1,0 +1,92 @@
+{%- comment -%}
+  snippets/design-tokens.liquid
+  Single source of truth for the design system. Included once in layout/theme.liquid <head>.
+  Every color, font, spacing and radius value in the CSS reads from these custom properties —
+  never hardcode a hex value or px gap in theme.css. Change the look in Theme Settings, not in code.
+{%- endcomment -%}
+<style>
+  :root{
+    /* ---- Scheme 1 — Light (default) ---- */
+    --scheme-1-bg: {{ settings.scheme_1_bg }};
+    --scheme-1-bg-subtle: {{ settings.scheme_1_bg_subtle }};
+    --scheme-1-border: {{ settings.scheme_1_border }};
+    --scheme-1-text: {{ settings.scheme_1_text }};
+    --scheme-1-text-secondary: {{ settings.scheme_1_text_secondary }};
+    --scheme-1-button: {{ settings.scheme_1_button }};
+    --scheme-1-button-text: {{ settings.scheme_1_button_text }};
+
+    /* ---- Scheme 2 — Dark ---- */
+    --scheme-2-bg: {{ settings.scheme_2_bg }};
+    --scheme-2-bg-subtle: {{ settings.scheme_2_bg_subtle }};
+    --scheme-2-border: {{ settings.scheme_2_border }};
+    --scheme-2-text: {{ settings.scheme_2_text }};
+    --scheme-2-text-secondary: {{ settings.scheme_2_text_secondary }};
+    --scheme-2-button: {{ settings.scheme_2_button }};
+    --scheme-2-button-text: {{ settings.scheme_2_button_text }};
+
+    /* ---- Scheme 3 — Brand (olive) ---- */
+    --scheme-3-bg: {{ settings.scheme_3_bg }};
+    --scheme-3-bg-subtle: {{ settings.scheme_3_bg_subtle }};
+    --scheme-3-border: {{ settings.scheme_3_border }};
+    --scheme-3-text: {{ settings.scheme_3_text }};
+    --scheme-3-text-secondary: {{ settings.scheme_3_text_secondary }};
+    --scheme-3-button: {{ settings.scheme_3_button }};
+    --scheme-3-button-text: {{ settings.scheme_3_button_text }};
+
+    /* ---- Accent & semantic (global, not per-scheme — trains the eye) ---- */
+    --color-accent: {{ settings.color_accent }};
+    --color-accent-text: {{ settings.color_accent_text }};
+    --color-sale: {{ settings.color_sale }};
+    --color-success: {{ settings.color_success }};
+    --color-warning: {{ settings.color_warning }};
+
+    /* ---- Typography ---- */
+    --font-heading: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
+    --font-heading-weight: {{ settings.type_heading_font.weight }};
+    --font-heading-style: {{ settings.type_heading_font.style }};
+    --font-body: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    --font-body-weight: {{ settings.type_body_font.weight }};
+    --heading-letter-spacing: {{ settings.heading_letter_spacing | times: 0.01 }}em;
+    --label-letter-spacing: {{ settings.label_letter_spacing | times: 0.01 }}em;
+    --font-body-size: {{ settings.body_font_size }}px;
+
+    /* Fluid modular scale, ~1.25 mobile / ~1.333 desktop */
+    --font-sm: 0.875rem;
+    --font-h4: clamp(1.125rem, 1rem + 0.5vw, 1.333rem);
+    --font-h3: clamp(1.333rem, 1.15rem + 0.9vw, 1.777rem);
+    --font-h2: clamp(1.6rem, 1.3rem + 1.5vw, 2.369rem);
+    --font-h1: clamp(2rem, 1.5rem + 2.5vw, 3.157rem);
+    --font-display: clamp(2.6rem, 1.9rem + 4vw, 4.6rem);
+
+    /* ---- Layout & spacing (4px scale) ---- */
+    --page-width: {{ settings.page_width }}px;
+    --section-gap: {{ settings.section_spacing_desktop }}px;
+    --section-gap-mobile: {{ settings.section_spacing_mobile }}px;
+    --grid-gap: {{ settings.grid_gap }}px;
+    --radius-base: {{ settings.radius_base }}px;
+    --radius-pill: 999px;
+
+    --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+    --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px;
+    --space-24: 96px; --space-32: 128px;
+
+    /* ---- Shadow scale ---- */
+    --shadow-sm: 0 1px 2px rgba(26,26,24,0.06);
+    --shadow-md: 0 8px 24px rgba(26,26,24,0.10);
+    --shadow-lg: 0 20px 48px rgba(26,26,24,0.16);
+
+    /* ---- Motion ---- */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --duration-fast: 150ms;
+    --duration-base: 220ms;
+    --duration-slow: 320ms;
+  }
+
+  .color-scheme-1{ --bg: var(--scheme-1-bg); --bg-subtle: var(--scheme-1-bg-subtle); --border: var(--scheme-1-border); --text: var(--scheme-1-text); --text-secondary: var(--scheme-1-text-secondary); --btn: var(--scheme-1-button); --btn-text: var(--scheme-1-button-text); background-color: var(--bg); color: var(--text); }
+  .color-scheme-2{ --bg: var(--scheme-2-bg); --bg-subtle: var(--scheme-2-bg-subtle); --border: var(--scheme-2-border); --text: var(--scheme-2-text); --text-secondary: var(--scheme-2-text-secondary); --btn: var(--scheme-2-button); --btn-text: var(--scheme-2-button-text); background-color: var(--bg); color: var(--text); }
+  .color-scheme-3{ --bg: var(--scheme-3-bg); --bg-subtle: var(--scheme-3-bg-subtle); --border: var(--scheme-3-border); --text: var(--scheme-3-text); --text-secondary: var(--scheme-3-text-secondary); --btn: var(--scheme-3-button); --btn-text: var(--scheme-3-button-text); background-color: var(--bg); color: var(--text); }
+
+  {%- if settings.enable_animations == false -%}
+  *, *::before, *::after{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  {%- endif -%}
+</style>

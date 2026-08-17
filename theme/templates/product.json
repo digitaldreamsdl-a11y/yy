@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "show_reviews": true,
+        "reassurance_text": "Free shipping over $250 · Ships in 24h",
+        "returns_text": "30-day returns · Free exchanges",
+        "cross_sell_collection": ""
+      }
+    },
+    "reviews": {
+      "type": "product-reviews",
+      "blocks": {
+        "r1": { "type": "review", "settings": { "rating": 5, "title": "Exactly as described", "body": "Fits true to size — I'm 5'11\" and took a size 40. The wool has real weight to it.", "author": "T. Bennett", "date": "August 2026", "verified": true } },
+        "r2": { "type": "review", "settings": { "rating": 4, "title": "Great jacket, sleeves ran long", "body": "Had to get the sleeves taken in about an inch, but the tailor said the cloth was excellent to work with.", "author": "D. Osei", "date": "July 2026", "verified": true, "reply": "Thanks for the note — we're updating our sleeve-length guidance for tall sizes based on feedback like this." } }
+      },
+      "block_order": ["r1", "r2"],
+      "settings": {}
+    }
+  },
+  "order": ["main", "reviews"]
+}

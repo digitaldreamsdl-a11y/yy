@@ -1,0 +1,283 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Vance & Hyde",
+    "theme_version": "1.0.0",
+    "theme_author": "Vance & Hyde Studio",
+    "theme_documentation_url": "https://github.com/digitaldreamsdl-a11y/yy",
+    "theme_support_url": "https://github.com/digitaldreamsdl-a11y/yy/issues"
+  },
+  {
+    "name": "Logo",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo image"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "label": "Logo width",
+        "min": 80,
+        "max": 260,
+        "step": 10,
+        "unit": "px",
+        "default": 150
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "64 x 64px .png recommended"
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Scheme 1 — Light (default)"
+      },
+      {
+        "type": "paragraph",
+        "content": "Used for the main site background. Warm neutrals read more premium than pure white/black."
+      },
+      { "type": "color", "id": "scheme_1_bg", "label": "Background", "default": "#FAF9F7" },
+      { "type": "color", "id": "scheme_1_bg_subtle", "label": "Subtle background", "default": "#F1EFEA" },
+      { "type": "color", "id": "scheme_1_border", "label": "Border", "default": "#E4E0D8" },
+      { "type": "color", "id": "scheme_1_text", "label": "Primary text", "default": "#1A1A18" },
+      { "type": "color", "id": "scheme_1_text_secondary", "label": "Secondary text", "default": "#6B6459" },
+      { "type": "color", "id": "scheme_1_button", "label": "Button background", "default": "#1A1A18" },
+      { "type": "color", "id": "scheme_1_button_text", "label": "Button text", "default": "#FAF9F7" },
+
+      { "type": "header", "content": "Scheme 2 — Dark" },
+      { "type": "paragraph", "content": "Used for footer, announcement bar, and dark editorial blocks." },
+      { "type": "color", "id": "scheme_2_bg", "label": "Background", "default": "#1A1A18" },
+      { "type": "color", "id": "scheme_2_bg_subtle", "label": "Subtle background", "default": "#242420" },
+      { "type": "color", "id": "scheme_2_border", "label": "Border", "default": "#3A3A34" },
+      { "type": "color", "id": "scheme_2_text", "label": "Primary text", "default": "#F5F3EE" },
+      { "type": "color", "id": "scheme_2_text_secondary", "label": "Secondary text", "default": "#A9A296" },
+      { "type": "color", "id": "scheme_2_button", "label": "Button background", "default": "#B9834A" },
+      { "type": "color", "id": "scheme_2_button_text", "label": "Button text", "default": "#1A1A18" },
+
+      { "type": "header", "content": "Scheme 3 — Brand (olive)" },
+      { "type": "paragraph", "content": "Identity moments — brand story blocks, dividers, logo tint." },
+      { "type": "color", "id": "scheme_3_bg", "label": "Background", "default": "#2C332B" },
+      { "type": "color", "id": "scheme_3_bg_subtle", "label": "Subtle background", "default": "#343B32" },
+      { "type": "color", "id": "scheme_3_border", "label": "Border", "default": "#454C42" },
+      { "type": "color", "id": "scheme_3_text", "label": "Primary text", "default": "#FAF9F7" },
+      { "type": "color", "id": "scheme_3_text_secondary", "label": "Secondary text", "default": "#C7CBC3" },
+      { "type": "color", "id": "scheme_3_button", "label": "Button background", "default": "#B9834A" },
+      { "type": "color", "id": "scheme_3_button_text", "label": "Button text", "default": "#1A1A18" },
+
+      { "type": "header", "content": "Accent & semantic" },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent (Add to cart / primary CTA)",
+        "default": "#7A2E2E",
+        "info": "Used almost exclusively for buy actions so the eye always knows where to click."
+      },
+      { "type": "color", "id": "color_accent_text", "label": "Accent text", "default": "#FAF9F7" },
+      { "type": "color", "id": "color_sale", "label": "Sale / compare-at price", "default": "#A33636" },
+      { "type": "color", "id": "color_success", "label": "Success", "default": "#3F6B4B" },
+      { "type": "color", "id": "color_warning", "label": "Low stock warning", "default": "#A67C27" }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      { "type": "header", "content": "Headings" },
+      {
+        "type": "font_picker",
+        "id": "type_heading_font",
+        "label": "Heading font",
+        "default": "playfair-display_n7",
+        "info": "A distinctive serif gives the brand a point of view — verify current availability in the font library."
+      },
+      {
+        "type": "range",
+        "id": "heading_letter_spacing",
+        "label": "Heading letter spacing",
+        "min": -20,
+        "max": 20,
+        "step": 1,
+        "unit": "0.01em",
+        "default": -1
+      },
+      { "type": "header", "content": "Body & UI" },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "label": "Body font",
+        "default": "urbanist_n4"
+      },
+      {
+        "type": "range",
+        "id": "body_font_size",
+        "label": "Base body size",
+        "min": 14,
+        "max": 18,
+        "step": 1,
+        "unit": "px",
+        "default": 16
+      },
+      { "type": "header", "content": "Eyebrow / labels" },
+      {
+        "type": "range",
+        "id": "label_letter_spacing",
+        "label": "Label letter spacing",
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": "0.01em",
+        "default": 8
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Max page width",
+        "min": 1100,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "default": 1360
+      },
+      {
+        "type": "range",
+        "id": "section_spacing_desktop",
+        "label": "Section spacing (desktop)",
+        "min": 32,
+        "max": 128,
+        "step": 4,
+        "unit": "px",
+        "default": 96
+      },
+      {
+        "type": "range",
+        "id": "section_spacing_mobile",
+        "label": "Section spacing (mobile)",
+        "min": 24,
+        "max": 96,
+        "step": 4,
+        "unit": "px",
+        "default": 56
+      },
+      {
+        "type": "range",
+        "id": "grid_gap",
+        "label": "Grid gap",
+        "min": 8,
+        "max": 48,
+        "step": 4,
+        "unit": "px",
+        "default": 24
+      },
+      {
+        "type": "select",
+        "id": "radius_base",
+        "label": "Corner radius",
+        "options": [
+          { "value": "0", "label": "Sharp (0px)" },
+          { "value": "2", "label": "Subtle (2px)" },
+          { "value": "6", "label": "Soft (6px)" }
+        ],
+        "default": "2"
+      }
+    ]
+  },
+  {
+    "name": "Motion",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_animations",
+        "label": "Enable scroll & hover animations",
+        "default": true,
+        "info": "prefers-reduced-motion is always respected regardless of this setting."
+      }
+    ]
+  },
+  {
+    "name": "Product cards",
+    "settings": [
+      {
+        "type": "select",
+        "id": "card_image_ratio",
+        "label": "Image ratio",
+        "options": [
+          { "value": "portrait", "label": "Portrait (4:5)" },
+          { "value": "square", "label": "Square (1:1)" }
+        ],
+        "default": "portrait"
+      },
+      {
+        "type": "checkbox",
+        "id": "card_hover_image",
+        "label": "Show second image on hover",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "card_quick_add",
+        "label": "Enable quick add",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_vendor",
+        "label": "Show designer / vendor name",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Cart behavior",
+        "options": [
+          { "value": "drawer", "label": "Drawer" },
+          { "value": "page", "label": "Page" }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_free_shipping_enable",
+        "label": "Show free shipping progress bar",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "cart_free_shipping_threshold",
+        "label": "Free shipping threshold ($)",
+        "default": 250
+      },
+      {
+        "type": "text",
+        "id": "cart_free_shipping_achieved_text",
+        "label": "Message once unlocked",
+        "default": "You've unlocked free shipping"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "text", "id": "social_instagram", "label": "Instagram URL" },
+      { "type": "text", "id": "social_pinterest", "label": "Pinterest URL" },
+      { "type": "text", "id": "social_facebook", "label": "Facebook URL" },
+      { "type": "text", "id": "social_tiktok", "label": "TikTok URL" }
+    ]
+  }
+]
